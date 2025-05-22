@@ -14,8 +14,9 @@ app.use("/api/v1/tickets", ticketRoutes);
 ; (async () => {
     try {
         await sequelize.authenticate();
-        await require("./models/passenger").sync();
-        console.log("✅ Database connected");
+        // sync all defined models (User, Booking, Ticket, …)
+        await sequelize.sync();
+        console.log("✅ Database connected and tables synced");
     } catch (err) {
         console.error("❌ DB connection failed:", err);
         process.exit(1);

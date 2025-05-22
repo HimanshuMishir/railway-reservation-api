@@ -22,11 +22,16 @@ const berthRanges = {
  * Count current usage (only tickets with age>=5 count toward confirmed/RAC/WL caps)
  */
 async function getCounts(t) {
-    const rows = await Ticket.findAll({
+
+    const query = {
         where: { age: { [Op.gte]: 5 } },
-        attributes: ["status", "berthType"],
-        transaction: t
-    });
+        attributes: ["status", "berthType"]
+    };
+    // only attach transaction if provided
+    if (t) query.transaction = t;
+
+    const rows = await Ticket.findAll(query);
+
 
     const confirmedByType = { LB: 0, MB: 0, UB: 0, SU: 0 };
     let rac = 0, wl = 0;

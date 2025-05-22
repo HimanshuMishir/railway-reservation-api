@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ticketCtrl = require("../controllers/ticketController");
+const ticketCtrl = require("../controllers/ticket.controller");
 
 // booking, single batch
 router.post("/book", ticketCtrl.book);
